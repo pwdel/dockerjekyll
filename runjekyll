@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# set exit if fails, any subsequent commands will fail and shell exits immediately
+set -e
+
+# cd into website before running jekyll
+cd website
+
+echo "Setting up jekyll website..."
+
+# set the Jekyll version
+export JEKYLL_VERSION=4.0
+# run jekyll server version, e.g. /srv/jekyll mounted as a volume
+docker run -p 4000:4000 --rm           \
+  --name dockerjekyll_container           \
+  --volume="$PWD:/srv/jekyll"             \
+  -it jekyll/builder:$JEKYLL_VERSION      \
+  jekyll serve
+
+
+echo "Jekyll website shutting down..."
